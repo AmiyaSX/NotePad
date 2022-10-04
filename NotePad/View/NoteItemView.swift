@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  NoteItemView.swift
 //  NotePad
 //
 //  Created by rockey220505 on 2022/10/4.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct NoteItemView: View {
     var body: some View {
-        HomeView()
+        
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct NoteItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        NoteItemView()
     }
 }
