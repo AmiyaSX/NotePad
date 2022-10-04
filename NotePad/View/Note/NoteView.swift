@@ -10,6 +10,7 @@ import SwiftUI
 struct NoteView: View {
     @State var notesToDelete: [NoteItem]?
     @State var showAlert = false
+    @State private var isEditable = false
     @State var noteItems: [NoteItem] = {
            guard let data = UserDefaults.standard.data(forKey: "notes") else { return [] }
            if let json = try? JSONDecoder().decode([NoteItem].self, from: data) {
@@ -30,14 +31,16 @@ struct NoteView: View {
             ZStack(alignment: .bottomTrailing) {
                 List {
                     ForEach(noteItems, id: \.self) { item in
-                        NoteItemView(item: item).onLongPressGesture {
-                            self.notesToDelete = [item]
-                            self.showAlert = true
+                        NoteItemView(item: item)
+                    }
+                    .onDelete(perform: deleteNote)
+                    .onMove(perform: moveNote)
+                    .onLongPressGesture {
+                        withAnimation {
+                            self.isEditable = true
                         }
-                    }.onDelete(perform: deleteNote)
-                }.alert(isPresented: $showAlert, content: {
-                                alert
-                })
+                    }
+                }.environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
                 Button(action: didTapAddNote, label: {
                     Image(systemName: "plus")
                         .imageScale(.large)
@@ -53,6 +56,14 @@ struct NoteView: View {
     func didTapAddNote() {
         let id = noteItems.reduce(0) { max($0, $1.id) } + 1
         noteItems.insert(NoteItem(id: id, title: "NoteTitle\(id)", content: "NoteText\(id)"), at: 0)
+        saveNotes()
+    }
+    
+    func moveNote(from source: IndexSet, to destination: Int) {
+        noteItems.move(fromOffsets: source, toOffset: destination)
+        withAnimation {
+            isEditable = false
+        }
         saveNotes()
     }
     

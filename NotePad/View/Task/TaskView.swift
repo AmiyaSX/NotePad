@@ -10,6 +10,7 @@ import SwiftUI
 struct TaskView: View {
     @State var tasksToDelete: [TaskItem]?
     @State var showAlert = false
+    @State private var isEditable = false
     @State var taskToComplete: TaskItem?
     @State var taskItems: [TaskItem] = {
         guard let data = UserDefaults.standard.data(forKey: "tasks") else { return [] }
@@ -30,12 +31,15 @@ struct TaskView: View {
             ZStack(alignment: .bottomTrailing) {
                 List {
                     ForEach(taskItems, id: \.self) { item in
-                        TaskItemView(item: item).onLongPressGesture {
-                            self.tasksToDelete = [item]
-                            self.showAlert = true
-                        }.alert(isPresented: $showAlert, content: { alert })
+                        TaskItemView(item: item)
                     }.onDelete(perform: deleteTask)
-                }
+                     .onMove(perform: moveTask)
+                     .onLongPressGesture {
+                        withAnimation {
+                            self.isEditable = true
+                        }
+                     }
+                }.environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
                 Button(action: didTapAddTask, label: {
                     Image(systemName: "plus")
                         .imageScale(.large)
@@ -52,6 +56,14 @@ struct TaskView: View {
     func didTapAddTask() {
         let id = taskItems.reduce(0) { max($0, $1.id) } + 1
         taskItems.insert(TaskItem(id: id, title: "TaskTitle", content: "TaskText\(id)"), at: 0)
+        saveTasks()
+    }
+    
+    func moveTask(from source: IndexSet, to destination: Int) {
+        taskItems.move(fromOffsets: source, toOffset: destination)
+        withAnimation {
+            isEditable = false
+        }
         saveTasks()
     }
     
