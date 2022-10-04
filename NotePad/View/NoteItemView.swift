@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct NoteItemView: View {
+    let item: NoteItem
+    
     var body: some View {
-        VStack {
-            
+        VStack(alignment: .leading) {
+            Text(item.title)
+                .font(.headline)
+            Spacer()
+            Text(item.dateText)
+                .font(.footnote)
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
         }
-    }
-}
-
-struct NoteItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        NoteItemView()
     }
 }

@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct NoteView: View {
-    
     @State var notesToDelete: [NoteItem]?
-    
     @State var showAlert = false
     @State var noteItems: [NoteItem] = {
            guard let data = UserDefaults.standard.data(forKey: "notes") else { return [] }
@@ -30,15 +28,14 @@ struct NoteView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
-                List(noteItems) { item in
-                    VStack(alignment: .leading) {
-                        Text(item.dateText).font(.headline)
-                        Text(item.content).lineLimit(nil).multilineTextAlignment(.leading)
-                    }.onLongPressGesture {
-                        self.notesToDelete = [item]
-                        self.showAlert = true
-                    }
-                    }.alert(isPresented: $showAlert, content: {
+                List {
+                    ForEach(noteItems, id: \.self) { item in
+                        NoteItemView(item: item).onLongPressGesture {
+                            self.notesToDelete = [item]
+                            self.showAlert = true
+                        }
+                    }.onDelete(perform: deleteNote)
+                }.alert(isPresented: $showAlert, content: {
                                 alert
                 })
                 Button(action: didTapAddNote, label: {
@@ -56,6 +53,11 @@ struct NoteView: View {
     func didTapAddNote() {
         let id = noteItems.reduce(0) { max($0, $1.id) } + 1
         noteItems.insert(NoteItem(id: id, title: "NoteTitle\(id)", content: "NoteText\(id)"), at: 0)
+        saveNotes()
+    }
+    
+    func deleteNote(at offsets: IndexSet) {
+        noteItems.remove(atOffsets: offsets)
         saveNotes()
     }
     

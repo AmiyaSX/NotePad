@@ -28,17 +28,14 @@ struct TaskView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
-                List(taskItems) { item in
-                    VStack(alignment: .leading) {
-                        Text(item.dateText).font(.headline)
-                        Text(item.content).lineLimit(nil).multilineTextAlignment(.leading)
-                    }.onLongPressGesture {
+                List {
+                    ForEach(taskItems, id: \.self) { item in
+                        TaskItemView(item: item).onLongPressGesture {
                             self.tasksToDelete = [item]
                             self.showAlert = true
-                        }
-                    }.alert(isPresented: $showAlert, content: {
-                                alert
-                    })
+                        }.alert(isPresented: $showAlert, content: { alert })
+                    }.onDelete(perform: deleteTask)
+                }
                 Button(action: didTapAddTask, label: {
                     Image(systemName: "plus")
                         .imageScale(.large)
@@ -55,6 +52,11 @@ struct TaskView: View {
     func didTapAddTask() {
         let id = taskItems.reduce(0) { max($0, $1.id) } + 1
         taskItems.insert(TaskItem(id: id, title: "TaskTitle", content: "TaskText\(id)"), at: 0)
+        saveTasks()
+    }
+    
+    func deleteTask(at offsets: IndexSet) {
+        taskItems.remove(atOffsets: offsets)
         saveTasks()
     }
     
