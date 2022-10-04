@@ -9,12 +9,8 @@ import SwiftUI
 
 struct TaskItemView: View {
     var body: some View {
-       
-    }
-}
-
-struct TaskItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskItemView()
+        VStack {
+            
+        }
     }
 }

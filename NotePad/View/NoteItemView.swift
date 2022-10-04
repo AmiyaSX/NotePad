@@ -9,7 +9,9 @@ import SwiftUI
 
 struct NoteItemView: View {
     var body: some View {
-        
+        VStack {
+            
+        }
     }
 }
 

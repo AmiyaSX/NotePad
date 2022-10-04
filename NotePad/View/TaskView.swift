@@ -27,30 +27,40 @@ struct TaskView: View {
     
     var body: some View {
         NavigationView {
-            List(taskItems) { item in
-                VStack(alignment: .leading) {
-                    Text(item.dateText).font(.headline)
-                    Text(item.content).lineLimit(nil).multilineTextAlignment(.leading)
-                }.onLongPressGesture {
-                        self.tasksToDelete = [item]
-                        self.showAlert = true
-                    }
-                }.alert(isPresented: $showAlert, content: {
-                            alert
-                })
-            Button(action: didTapAddTask, label: { Text("Add") }).padding(8)
+            ZStack(alignment: .bottomTrailing) {
+                List(taskItems) { item in
+                    VStack(alignment: .leading) {
+                        Text(item.dateText).font(.headline)
+                        Text(item.content).lineLimit(nil).multilineTextAlignment(.leading)
+                    }.onLongPressGesture {
+                            self.tasksToDelete = [item]
+                            self.showAlert = true
+                        }
+                    }.alert(isPresented: $showAlert, content: {
+                                alert
+                    })
+                Button(action: didTapAddTask, label: {
+                    Image(systemName: "plus")
+                        .imageScale(.large)
+                        .foregroundColor(.white)
+                        .frame(width: 50, height: 50, alignment:.center)
+                        .background(Color.yellow)
+                        .clipShape(Circle())
+                }).padding(12)
+            }
+           
         }
     }
     
     func didTapAddTask() {
         let id = taskItems.reduce(0) { max($0, $1.id) } + 1
-        taskItems.insert(TaskItem(id: id, title: "TaskTitle", content: "TaskText"), at: 0)
+        taskItems.insert(TaskItem(id: id, title: "TaskTitle", content: "TaskText\(id)"), at: 0)
         saveTasks()
     }
     
     func deleteTasks() {
-          guard let itemToDelete = tasksToDelete else { return }
-          taskItems = itemToDelete.filter { !$0.isToDelete }
+          guard let tasksToDelete = tasksToDelete else { return }
+          taskItems = taskItems.filter { !tasksToDelete.contains($0) }
           saveTasks()
     }
     
