@@ -9,8 +9,8 @@ import Foundation
 
 struct TaskItem: Codable, Hashable, Identifiable {
     let id: Int
-    var title: String
-    var content: String
+    let title: String
+    let content: String
     var date = Date()
     var dateText: String {
         return date.formatted()

@@ -9,9 +9,7 @@ import SwiftUI
 
 struct TaskItemView: View {
     var body: some View {
-        HStack {
-            
-        }
+       
     }
 }
 

@@ -9,11 +9,10 @@ import SwiftUI
 
 struct NoteDetailView: View {
     @Binding var note: NoteItem
-    @Binding var content: String
-
+    
     var body: some View {
         VStack {
-            TextField(note.content, text: $content)
+            TextField($note.content, placeholder: Text("Start typing here"))
                 .padding(.init(top: 20, leading: 20, bottom: 200, trailing: 20))
                 .background(Color.blue)
             Spacer()
@@ -21,3 +20,8 @@ struct NoteDetailView: View {
     }
 }
 
+struct NoteDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        NoteDetailView()
+    }
+}
