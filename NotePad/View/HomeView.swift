@@ -16,7 +16,20 @@ struct HomeView: View {
     }
 
     var body: some View {
-       
+        TabView {
+            NoteView().tabItem {
+                NavigationLink(destination: NoteView()) {
+                    Image(systemName: "doc.text")
+                    Text("Note")
+                }.tag(1)
+            }
+            TaskView().tabItem {
+                NavigationLink(destination: TaskView()) {
+                    Image(systemName: "square.and.pencil")
+                    Text("Todo")
+                }.tag(2)
+            }
+        }
     }
     
 }
