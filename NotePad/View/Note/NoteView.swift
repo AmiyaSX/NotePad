@@ -6,44 +6,32 @@
 //
 
 import SwiftUI
+import Combine
 
 struct NoteView: View {
-    @State private var selectNotes = Set<NoteItem>()
-    @State var notesToDelete: [NoteItem]?
-    @State var showAlert = false
-    @State private var isEditable = false
-    @State var noteItems: [NoteItem] = {
-           guard let data = UserDefaults.standard.data(forKey: "notes") else { return [] }
-           if let json = try? JSONDecoder().decode([NoteItem].self, from: data) {
-               return json
-           }
-           return []
-       }()
     
-    var alert: Alert {
-           Alert(title: Text("Hey!"),
-                 message: Text("Are you sure you want to delete?"),
-                 primaryButton: .destructive(Text("Delete"), action: deleteNotes),
-                 secondaryButton: .cancel())
-    }
+    @EnvironmentObject private var noteViewModel: NoteViewModel
     
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
                 List {
-                    ForEach(noteItems, id: \.self) { item in
-                        NoteItemView(item: item)
-                    }.onDelete(perform: deleteNote)
-                     .onMove(perform: moveNote)
+                    ForEach(NoteViewModel.shared.noteItems, id: \.self) { item in
+                        NavigationLink {
+                            NoteDetailView(note: $noteViewModel.noteItems[noteViewModel.findItemIdex(item: item)], title: noteViewModel.noteItems[noteViewModel.findItemIdex(item: item)].title, content: noteViewModel.noteItems[noteViewModel.findItemIdex(item: item)].content)
+                        } label: {
+                            NoteItemView(item: item)
+                        }
+                    }.onDelete(perform: noteViewModel.deleteNote)
+                        .onMove(perform: noteViewModel.moveNote)
                      .onLongPressGesture {
                         withAnimation {
-                            self.isEditable = true
+                            noteViewModel.isEditable = true
                         }
                      }
                 }.navigationTitle("Notes")
                  .toolbar { EditButton() }
-//                .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
-                Button(action: didTapAddNote, label: {
+                Button(action: noteViewModel.didTapAddNote, label: {
                     Image(systemName: "plus")
                         .imageScale(.large)
                         .foregroundColor(.white)
@@ -51,43 +39,11 @@ struct NoteView: View {
                         .background(Color.yellow)
                         .clipShape(Circle())
                 }).padding(12)
-            }
+            }.onChange(of: noteViewModel.noteItems, perform: { _ in
+                noteViewModel.saveNotes()
+            })
         }
     }
-    
-    func didTapAddNote() {
-        let id = noteItems.reduce(0) { max($0, $1.id) } + 1
-        noteItems.insert(NoteItem(id: id, title: "NoteTitle\(id)", content: "NoteText\(id)"), at: 0)
-        saveNotes()
-    }
-    
-    func moveNote(from source: IndexSet, to destination: Int) {
-        noteItems.move(fromOffsets: source, toOffset: destination)
-        withAnimation {
-            isEditable = false
-        }
-        saveNotes()
-    }
-    
-    func deleteNote(at offsets: IndexSet) {
-        noteItems.remove(atOffsets: offsets)
-        saveNotes()
-    }
-    
-    func deleteNotes() {
-        guard let notesToDelete = notesToDelete else { return }
-        noteItems = noteItems.filter { !notesToDelete.contains($0) }
-        saveNotes()
-    }
-    
-    func saveNotes() {
-        guard let data = try? JSONEncoder().encode(noteItems) else { return }
-        UserDefaults.standard.set(data, forKey: "notes")
-    }
+
 }
 
-struct NoteView_Previews: PreviewProvider {
-    static var previews: some View {
-        NoteView()
-    }
-}

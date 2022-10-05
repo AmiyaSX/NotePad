@@ -9,8 +9,8 @@ import Foundation
 
 struct NoteItem: Codable, Hashable, Identifiable {
     let id: Int
-    let title: String
-    let content: String
+    var title: String
+    var content: String
     var date = Date()
     var dateText: String {
         return date.formatted()

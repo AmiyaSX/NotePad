@@ -9,6 +9,9 @@ import SwiftUI
 
 struct HomeView: View {
 
+    @StateObject var noteViewModel = NoteViewModel.shared
+    @StateObject var taskViewModel = TaskViewModel.shared
+    
     var SearchBar: some View {
         return HStack(spacing: 6) {
             Image(systemName: "magnifyingglass").font(.title3).foregroundColor(.gray)
@@ -32,7 +35,8 @@ struct HomeView: View {
                         }.tag(2)
                 }
             }
-        }
+        }.environmentObject(noteViewModel)
+         .environmentObject(taskViewModel)
        
     }
     

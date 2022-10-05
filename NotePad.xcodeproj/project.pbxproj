@@ -24,10 +24,10 @@
 		767D0FCB28EC41C200FFD4AE /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FC428EC41C200FFD4AE /* TaskDetailView.swift */; };
 		767D0FCF28EC41CC00FFD4AE /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FCD28EC41CC00FFD4AE /* NoteItem.swift */; };
 		767D0FD028EC41CC00FFD4AE /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FCE28EC41CC00FFD4AE /* TaskItem.swift */; };
-		767D0FD328EC41D100FFD4AE /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FD228EC41D100FFD4AE /* DateUtil.swift */; };
+		767D0FD328EC41D100FFD4AE /* Date++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FD228EC41D100FFD4AE /* Date++.swift */; };
 		767D0FD828ED333400FFD4AE /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 767D0FD728ED333400FFD4AE /* MarkdownUI */; };
-		767D0FDB28ED4D4000FFD4AE /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FDA28ED4D4000FFD4AE /* NoteViewController.swift */; };
-		767D0FDD28ED4D5000FFD4AE /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FDC28ED4D5000FFD4AE /* TaskViewController.swift */; };
+		767D0FDB28ED4D4000FFD4AE /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FDA28ED4D4000FFD4AE /* NoteViewModel.swift */; };
+		767D0FDD28ED4D5000FFD4AE /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FDC28ED4D5000FFD4AE /* TaskViewModel.swift */; };
 		9B5F578408CF58A463ECEAFB /* Pods_NotePadTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66840CFCD0CC661C34AA3A1F /* Pods_NotePadTests.framework */; };
 		AE557212774241E4A92203D6 /* Pods_NotePad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FDBC93C93E48A6874168873 /* Pods_NotePad.framework */; };
 /* End PBXBuildFile section */
@@ -72,9 +72,9 @@
 		767D0FC428EC41C200FFD4AE /* TaskDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
 		767D0FCD28EC41CC00FFD4AE /* NoteItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteItem.swift; sourceTree = "<group>"; };
 		767D0FCE28EC41CC00FFD4AE /* TaskItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
-		767D0FD228EC41D100FFD4AE /* DateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
-		767D0FDA28ED4D4000FFD4AE /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
-		767D0FDC28ED4D5000FFD4AE /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
+		767D0FD228EC41D100FFD4AE /* Date++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date++.swift"; sourceTree = "<group>"; };
+		767D0FDA28ED4D4000FFD4AE /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
+		767D0FDC28ED4D5000FFD4AE /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		8346093986CFE94622F1620F /* Pods-NotePad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotePad.release.xcconfig"; path = "Target Support Files/Pods-NotePad/Pods-NotePad.release.xcconfig"; sourceTree = "<group>"; };
 		B103B782F697CA016019E557 /* Pods-NotePad-NotePadUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotePad-NotePadUITests.debug.xcconfig"; path = "Target Support Files/Pods-NotePad-NotePadUITests/Pods-NotePad-NotePadUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B117531B0EE5E63BA25998FF /* Pods-NotePad-NotePadUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotePad-NotePadUITests.release.xcconfig"; path = "Target Support Files/Pods-NotePad-NotePadUITests/Pods-NotePad-NotePadUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -147,7 +147,7 @@
 		762E154C28EBFB7D00480E55 /* NotePad */ = {
 			isa = PBXGroup;
 			children = (
-				767D0FD928ED4D1800FFD4AE /* ViewController */,
+				767D0FD928ED4D1800FFD4AE /* ViewModel */,
 				767D0FD128EC41D100FFD4AE /* Util */,
 				767D0FCC28EC41CC00FFD4AE /* Model */,
 				767D0FBD28EC41C200FFD4AE /* View */,
@@ -206,7 +206,7 @@
 		767D0FD128EC41D100FFD4AE /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				767D0FD228EC41D100FFD4AE /* DateUtil.swift */,
+				767D0FD228EC41D100FFD4AE /* Date++.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -231,13 +231,13 @@
 			path = Task;
 			sourceTree = "<group>";
 		};
-		767D0FD928ED4D1800FFD4AE /* ViewController */ = {
+		767D0FD928ED4D1800FFD4AE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				767D0FDA28ED4D4000FFD4AE /* NoteViewController.swift */,
-				767D0FDC28ED4D5000FFD4AE /* TaskViewController.swift */,
+				767D0FDA28ED4D4000FFD4AE /* NoteViewModel.swift */,
+				767D0FDC28ED4D5000FFD4AE /* TaskViewModel.swift */,
 			);
-			path = ViewController;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		CA45EB7B68ABB91504F71D8F /* Pods */ = {
@@ -462,17 +462,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				767D0FC728EC41C200FFD4AE /* TaskItemView.swift in Sources */,
-				767D0FDD28ED4D5000FFD4AE /* TaskViewController.swift in Sources */,
+				767D0FDD28ED4D5000FFD4AE /* TaskViewModel.swift in Sources */,
 				767D0FC928EC41C200FFD4AE /* TaskView.swift in Sources */,
 				762E155028EBFB7D00480E55 /* ContentView.swift in Sources */,
-				767D0FDB28ED4D4000FFD4AE /* NoteViewController.swift in Sources */,
+				767D0FDB28ED4D4000FFD4AE /* NoteViewModel.swift in Sources */,
 				767D0FCA28EC41C200FFD4AE /* NoteDetailView.swift in Sources */,
 				767D0FCF28EC41CC00FFD4AE /* NoteItem.swift in Sources */,
 				767D0FD028EC41CC00FFD4AE /* TaskItem.swift in Sources */,
 				762E154E28EBFB7D00480E55 /* NotePadApp.swift in Sources */,
 				767D0FC828EC41C200FFD4AE /* HomeView.swift in Sources */,
 				767D0FC628EC41C200FFD4AE /* NoteView.swift in Sources */,
-				767D0FD328EC41D100FFD4AE /* DateUtil.swift in Sources */,
+				767D0FD328EC41D100FFD4AE /* Date++.swift in Sources */,
 				767D0FC528EC41C200FFD4AE /* NoteItemView.swift in Sources */,
 				767D0FCB28EC41C200FFD4AE /* TaskDetailView.swift in Sources */,
 			);
