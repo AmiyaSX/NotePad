@@ -12,13 +12,22 @@ struct TaskItemView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(item.title)
-                .font(.headline)
+            if (item.isComleted) {
+                Text(item.title)
+                    .font(.headline)
+                    .strikethrough()
+            } else {
+                Text(item.title)
+                    .font(.headline)
+            }
+                    
             Spacer()
             Text(item.dateText)
                 .font(.footnote)
+                .italic()
                 .lineLimit(nil)
                 .multilineTextAlignment(.leading)
         }
     }
+    
 }

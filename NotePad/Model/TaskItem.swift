@@ -17,5 +17,5 @@ struct TaskItem: Codable, Hashable, Identifiable {
     }
     var isComleted: Bool = false
     var isPin: Bool = false
-    var isToDelete: Bool = false
+    var isSelected: Bool = false
 }

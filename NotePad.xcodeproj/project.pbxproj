@@ -25,6 +25,9 @@
 		767D0FCF28EC41CC00FFD4AE /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FCD28EC41CC00FFD4AE /* NoteItem.swift */; };
 		767D0FD028EC41CC00FFD4AE /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FCE28EC41CC00FFD4AE /* TaskItem.swift */; };
 		767D0FD328EC41D100FFD4AE /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FD228EC41D100FFD4AE /* DateUtil.swift */; };
+		767D0FD828ED333400FFD4AE /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 767D0FD728ED333400FFD4AE /* MarkdownUI */; };
+		767D0FDB28ED4D4000FFD4AE /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FDA28ED4D4000FFD4AE /* NoteViewController.swift */; };
+		767D0FDD28ED4D5000FFD4AE /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FDC28ED4D5000FFD4AE /* TaskViewController.swift */; };
 		9B5F578408CF58A463ECEAFB /* Pods_NotePadTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66840CFCD0CC661C34AA3A1F /* Pods_NotePadTests.framework */; };
 		AE557212774241E4A92203D6 /* Pods_NotePad.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FDBC93C93E48A6874168873 /* Pods_NotePad.framework */; };
 /* End PBXBuildFile section */
@@ -70,6 +73,8 @@
 		767D0FCD28EC41CC00FFD4AE /* NoteItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteItem.swift; sourceTree = "<group>"; };
 		767D0FCE28EC41CC00FFD4AE /* TaskItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
 		767D0FD228EC41D100FFD4AE /* DateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
+		767D0FDA28ED4D4000FFD4AE /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		767D0FDC28ED4D5000FFD4AE /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		8346093986CFE94622F1620F /* Pods-NotePad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotePad.release.xcconfig"; path = "Target Support Files/Pods-NotePad/Pods-NotePad.release.xcconfig"; sourceTree = "<group>"; };
 		B103B782F697CA016019E557 /* Pods-NotePad-NotePadUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotePad-NotePadUITests.debug.xcconfig"; path = "Target Support Files/Pods-NotePad-NotePadUITests/Pods-NotePad-NotePadUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B117531B0EE5E63BA25998FF /* Pods-NotePad-NotePadUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotePad-NotePadUITests.release.xcconfig"; path = "Target Support Files/Pods-NotePad-NotePadUITests/Pods-NotePad-NotePadUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -84,6 +89,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE557212774241E4A92203D6 /* Pods_NotePad.framework in Frameworks */,
+				767D0FD828ED333400FFD4AE /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +147,7 @@
 		762E154C28EBFB7D00480E55 /* NotePad */ = {
 			isa = PBXGroup;
 			children = (
+				767D0FD928ED4D1800FFD4AE /* ViewController */,
 				767D0FD128EC41D100FFD4AE /* Util */,
 				767D0FCC28EC41CC00FFD4AE /* Model */,
 				767D0FBD28EC41C200FFD4AE /* View */,
@@ -224,6 +231,15 @@
 			path = Task;
 			sourceTree = "<group>";
 		};
+		767D0FD928ED4D1800FFD4AE /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				767D0FDA28ED4D4000FFD4AE /* NoteViewController.swift */,
+				767D0FDC28ED4D5000FFD4AE /* TaskViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		CA45EB7B68ABB91504F71D8F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,6 +270,9 @@
 			dependencies = (
 			);
 			name = NotePad;
+			packageProductDependencies = (
+				767D0FD728ED333400FFD4AE /* MarkdownUI */,
+			);
 			productName = NotePad;
 			productReference = 762E154A28EBFB7D00480E55 /* NotePad.app */;
 			productType = "com.apple.product-type.application";
@@ -328,6 +347,9 @@
 				Base,
 			);
 			mainGroup = 762E154128EBFB7D00480E55;
+			packageReferences = (
+				767D0FD628ED333400FFD4AE /* XCRemoteSwiftPackageReference "MarkdownUI" */,
+			);
 			productRefGroup = 762E154B28EBFB7D00480E55 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -440,8 +462,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				767D0FC728EC41C200FFD4AE /* TaskItemView.swift in Sources */,
+				767D0FDD28ED4D5000FFD4AE /* TaskViewController.swift in Sources */,
 				767D0FC928EC41C200FFD4AE /* TaskView.swift in Sources */,
 				762E155028EBFB7D00480E55 /* ContentView.swift in Sources */,
+				767D0FDB28ED4D4000FFD4AE /* NoteViewController.swift in Sources */,
 				767D0FCA28EC41C200FFD4AE /* NoteDetailView.swift in Sources */,
 				767D0FCF28EC41CC00FFD4AE /* NoteItem.swift in Sources */,
 				767D0FD028EC41CC00FFD4AE /* TaskItem.swift in Sources */,
@@ -781,6 +805,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		767D0FD628ED333400FFD4AE /* XCRemoteSwiftPackageReference "MarkdownUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/MarkdownUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		767D0FD728ED333400FFD4AE /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 767D0FD628ED333400FFD4AE /* XCRemoteSwiftPackageReference "MarkdownUI" */;
+			productName = MarkdownUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 762E154228EBFB7D00480E55 /* Project object */;
 }

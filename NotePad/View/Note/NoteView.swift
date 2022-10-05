@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NoteView: View {
+    @State private var selectNotes = Set<NoteItem>()
     @State var notesToDelete: [NoteItem]?
     @State var showAlert = false
     @State private var isEditable = false
@@ -32,15 +33,16 @@ struct NoteView: View {
                 List {
                     ForEach(noteItems, id: \.self) { item in
                         NoteItemView(item: item)
-                    }
-                    .onDelete(perform: deleteNote)
-                    .onMove(perform: moveNote)
-                    .onLongPressGesture {
+                    }.onDelete(perform: deleteNote)
+                     .onMove(perform: moveNote)
+                     .onLongPressGesture {
                         withAnimation {
                             self.isEditable = true
                         }
-                    }
-                }.environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
+                     }
+                }.navigationTitle("Notes")
+                 .toolbar { EditButton() }
+//                .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
                 Button(action: didTapAddNote, label: {
                     Image(systemName: "plus")
                         .imageScale(.large)

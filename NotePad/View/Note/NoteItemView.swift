@@ -15,10 +15,18 @@ struct NoteItemView: View {
             Text(item.title)
                 .font(.headline)
             Spacer()
-            Text(item.dateText)
-                .font(.footnote)
+            Text(item.content)
+                .font(.subheadline)
                 .lineLimit(nil)
                 .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Spacer()
+            Text(item.dateText)
+                .font(.caption2)
+                .italic()
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

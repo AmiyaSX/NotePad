@@ -16,5 +16,5 @@ struct NoteItem: Codable, Hashable, Identifiable {
         return date.formatted()
     }
     var isPin: Bool = false
-    var isToDelete: Bool = false
+    var isSelected: Bool = false
 }
