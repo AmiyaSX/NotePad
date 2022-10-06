@@ -17,19 +17,22 @@ struct NoteView: View {
             ZStack(alignment: .bottomTrailing) {
                 List {
                     ForEach(NoteViewModel.shared.noteItems, id: \.self) { item in
-                        NavigationLink {
-                            NoteDetailView(note: $noteViewModel.noteItems[noteViewModel.findItemIdex(item: item)], title: noteViewModel.noteItems[noteViewModel.findItemIdex(item: item)].title, content: noteViewModel.noteItems[noteViewModel.findItemIdex(item: item)].content)
-                        } label: {
+                        ZStack {
+                            NavigationLink(destination:  NoteDetailView(note: $noteViewModel.noteItems[noteViewModel.findItemIdex(item: item)], title: noteViewModel.noteItems[noteViewModel.findItemIdex(item: item)].title, content: noteViewModel.noteItems[noteViewModel.findItemIdex(item: item)].content)) {
+                            }.opacity(0)
                             NoteItemView(item: item)
                         }
+                      
                     }.onDelete(perform: noteViewModel.deleteNote)
-                        .onMove(perform: noteViewModel.moveNote)
-                     .onLongPressGesture {
-                        withAnimation {
-                            noteViewModel.isEditable = true
-                        }
-                     }
-                }.navigationTitle("Notes")
+                     .onMove(perform: noteViewModel.moveNote)
+//                     .onLongPressGesture {
+//                        withAnimation {
+//                            noteViewModel.isEditable = true
+//                        }
+//                     }
+                     .listRowSeparator(.hidden)
+                }.listStyle(.plain)
+                 .navigationTitle("Notes")
                  .toolbar { EditButton() }
                 Button(action: noteViewModel.didTapAddNote, label: {
                     Image(systemName: "plus")

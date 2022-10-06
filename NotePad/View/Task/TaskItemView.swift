@@ -15,18 +15,23 @@ struct TaskItemView: View {
             if (item.isComleted) {
                 Text(item.title)
                     .font(.headline)
+                    .foregroundColor(Color.gray)
                     .strikethrough()
+                    .padding(.top)
+                    
             } else {
                 Text(item.title)
                     .font(.headline)
+                    .padding(.top)
             }
                     
             Spacer()
             Text(item.dateText)
-                .font(.footnote)
+                .font(.caption2)
                 .italic()
+                .foregroundColor(item.isComleted ? Color.gray : Color.black)
                 .lineLimit(nil)
-                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
     

@@ -14,19 +14,23 @@ struct NoteItemView: View {
         VStack(alignment: .leading) {
             Text(item.title)
                 .font(.headline)
+                .padding(.top)
+                .padding(.leading)
+            Divider().frame(width: 100, alignment: .leading).padding(.leading)
             Spacer()
             Text(item.content)
                 .font(.subheadline)
                 .lineLimit(nil)
-                .multilineTextAlignment(.leading)
+                .multilineTextAlignment(.leading).padding(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
             Text(item.dateText)
                 .font(.caption2)
                 .italic()
                 .lineLimit(nil)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }
+                .multilineTextAlignment(.leading).padding(.trailing).padding(.bottom)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+        }.background(Color(UIColor(named: item.isPin ? "NotePinColor" : "CardColor2")!))
+         .cornerRadius(20)
     }
 }

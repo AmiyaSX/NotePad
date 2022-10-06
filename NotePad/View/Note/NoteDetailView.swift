@@ -26,7 +26,6 @@ struct NoteDetailView: View {
             TextField("NoteContent", text: $content, prompt: Text("Type here to start..."))
                 .padding(.init(top: 0, leading: 20, bottom: 500, trailing: 20))
                 .lineLimit(nil)
-            Divider()
         }
         .navigationBarItems(trailing: Image(systemName: "doc.on.doc").onTapGesture {
             note.title = title

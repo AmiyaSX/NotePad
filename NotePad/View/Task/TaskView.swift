@@ -17,12 +17,13 @@ struct TaskView: View {
                 List {
                     Section(header: Text("Todo(\(taskViewModel.taskItems.count))").font(.subheadline)) {
                         ForEach(taskViewModel.taskItems, id: \.self) { item in
-                            HStack {
+                            HStack(alignment: .firstTextBaseline) {
                                 Button(action: {
                                     taskViewModel.taskToComplete = item
                                     taskViewModel.completeTask()
                                 }, label: {
                                     Image(systemName: "square")
+                                        .foregroundColor(Color.green)
                                 }).buttonStyle(BorderlessButtonStyle())
                                 TaskItemView(item: item)
                             }
@@ -37,12 +38,13 @@ struct TaskView: View {
                     }
                     Section(header: Text("Completed(\(taskViewModel.taskCompletedItems.count))").font(.subheadline)) {
                         ForEach(taskViewModel.taskCompletedItems, id: \.self) { item in
-                            HStack {
+                            HStack(alignment: .firstTextBaseline) {
                                 Button(action: {
                                     taskViewModel.taskToDo = item
                                     taskViewModel.makeTaskToDo()
                                 }, label: {
                                     Image(systemName: "checkmark.square.fill")
+                                        .foregroundColor(Color.gray)
                                 }).buttonStyle(BorderlessButtonStyle())
                                 TaskItemView(item: item)
                             }
