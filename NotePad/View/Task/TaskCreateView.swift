@@ -1,13 +1,13 @@
 //
-//  TaskDetailView.swift
+//  TaskCreateView.swift
 //  NotePad
 //
-//  Created by rockey220505 on 2022/10/4.
+//  Created by rockey220505 on 2022/10/6.
 //
 
 import SwiftUI
 
-struct TaskDetailView: View {
+struct TaskCreateView: View {
     @Binding var task: TaskItem
     @EnvironmentObject var taskViewModel: TaskViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -30,8 +30,7 @@ struct TaskDetailView: View {
                 .cornerRadius(10)
                 .padding(.horizontal)
                 Button(action: {
-                    task.title = title
-                    task.date = Date()
+                    saveTask()
                     presentationMode.wrappedValue.dismiss() //解决子视图返回根视图问题
                 }, label: {
                     Text("Save")
@@ -44,5 +43,10 @@ struct TaskDetailView: View {
             }
         }
         .frame(maxHeight: .infinity, alignment: .topLeading)
+    }
+    func saveTask() {
+        task.title = title
+        task.date = Date()
+        taskViewModel.addTask()
     }
 }

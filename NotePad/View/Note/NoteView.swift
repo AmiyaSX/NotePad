@@ -11,6 +11,7 @@ import Combine
 struct NoteView: View {
     
     @EnvironmentObject private var noteViewModel: NoteViewModel
+    @State var items = NoteViewModel.shared.noteItems
     
     var body: some View {
         NavigationView {
@@ -32,17 +33,19 @@ struct NoteView: View {
 //                     }
                      .listRowSeparator(.hidden)
                 }.listStyle(.plain)
-                 .navigationTitle("Notes")
-                 .toolbar { EditButton() }
-                Button(action: noteViewModel.didTapAddNote, label: {
-                    Image(systemName: "plus")
-                        .imageScale(.large)
-                        .foregroundColor(.white)
-                        .frame(width: 50, height: 50, alignment:.center)
-                        .background(Color.yellow)
-                        .clipShape(Circle())
-                }).padding(12)
-            }.onChange(of: noteViewModel.noteItems, perform: { _ in
+                NavigationLink(destination: NoteCreateView(note: $noteViewModel.newNote, title: noteViewModel.newNote.title, content: noteViewModel.newNote.content), label: {
+                     Image(systemName: "plus")
+                         .imageScale(.large)
+                         .foregroundColor(.white)
+                         .frame(width: 50, height: 50, alignment:.center)
+                         .background(Color.yellow)
+                         .clipShape(Circle()).padding(12)
+                         .shadow(color: .primary, radius: 60, x: 0.1, y: 0.1)
+                 })
+            }
+            .navigationTitle("Notes (\(NoteViewModel.shared.noteItems.count))")
+            .toolbar { EditButton() }
+            .onChange(of: noteViewModel.noteItems, perform: { _ in
                 noteViewModel.saveNotes()
             })
         }

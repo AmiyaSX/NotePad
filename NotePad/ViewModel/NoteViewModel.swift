@@ -13,6 +13,7 @@ class NoteViewModel: ObservableObject {
     @Published var notesToDelete: [NoteItem]?
     @Published var showAlert = false
     @Published var isEditable = false
+    @Published var newNote: NoteItem
     @State var selectNotes = Set<NoteItem>()
     @Published var noteItems: [NoteItem] = {
         guard let data = UserDefaults.standard.data(forKey: "notes") else { return [] }
@@ -24,7 +25,9 @@ class NoteViewModel: ObservableObject {
     
     static let shared = NoteViewModel()
     
-    private init() { }
+    private init() {
+        newNote = NoteItem(id: -1, title: "Title", content: "")
+    }
     
     func findItemIdex(item: NoteItem) -> Int {
         NoteViewModel.shared.noteItems.firstIndex(of: item) ?? -1
@@ -32,7 +35,12 @@ class NoteViewModel: ObservableObject {
     
     func didTapAddNote() {
         let id = noteItems.reduce(0) { max($0, $1.id) } + 1
-        noteItems.insert(NoteItem(id: id, title: "NoteTitle\(id)", content: "NoteText\(id)"), at: 0)
+        newNote = NoteItem(id: id, title: "Title",content: "", date: Date())
+    }
+    
+    func addNote() {
+        noteItems.insert(newNote, at: 0)
+        didTapAddNote()
     }
     
     func moveNote(from source: IndexSet, to destination: Int) {

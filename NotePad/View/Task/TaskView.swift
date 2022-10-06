@@ -10,6 +10,7 @@ import SwiftUI
 struct TaskView: View {
 
     @EnvironmentObject private var taskViewModel: TaskViewModel
+    @State private var isPresented = false
     
     var body: some View {
         NavigationView {
@@ -17,17 +18,20 @@ struct TaskView: View {
                 List {
                     Section(header: Text("Todo(\(taskViewModel.taskItems.count))").font(.subheadline)) {
                         ForEach(taskViewModel.taskItems, id: \.self) { item in
-                            HStack(alignment: .firstTextBaseline) {
-                                Button(action: {
-                                    taskViewModel.taskToComplete = item
-                                    taskViewModel.completeTask()
-                                }, label: {
-                                    Image(systemName: "square")
-                                        .foregroundColor(Color.green)
-                                }).buttonStyle(BorderlessButtonStyle())
-                                TaskItemView(item: item)
+                            ZStack {
+                                NavigationLink(destination:  TaskDetailView(task: $taskViewModel.taskItems[taskViewModel.findItemIdex(item: item)], title: taskViewModel.taskItems[taskViewModel.findItemIdex(item: item)].title)) {
+                                }.opacity(0)
+                                HStack(alignment: .firstTextBaseline) {
+                                    Button(action: {
+                                        taskViewModel.taskToComplete = item
+                                        taskViewModel.completeTask()
+                                    }, label: {
+                                        Image(systemName: "square")
+                                            .foregroundColor(Color.green)
+                                    }).buttonStyle(BorderlessButtonStyle())
+                                    TaskItemView(item: item)
+                                }
                             }
-                            
                         }.onDelete(perform: taskViewModel.deleteTask)
                             .onMove(perform: taskViewModel.moveTask)
                          .onLongPressGesture {
@@ -56,17 +60,28 @@ struct TaskView: View {
                             }
                          }
                     }
-                }.toolbar{ EditButton() }
-                 .navigationTitle("ToDoList")
-                Button(action: taskViewModel.didTapAddTask, label: {
+                }
+                Button(action: {
+                    isPresented.toggle()
+                }) {
                     Image(systemName: "plus")
                         .imageScale(.large)
                         .foregroundColor(.white)
                         .frame(width: 50, height: 50, alignment:.center)
                         .background(Color.yellow)
                         .clipShape(Circle())
-                }).padding(12)
-            }.onChange(of: taskViewModel.taskItems, perform: { _ in
+                        .shadow(color: .primary, radius: 60, x: 0.1, y: 0.1)
+                }.padding(12)
+                .sheet(isPresented: $isPresented) {
+                    TaskCreateView(task: $taskViewModel.newTask, title: taskViewModel.newTask.title)
+                        .presentationDetents([.height(250)])
+                }
+
+                    
+                
+            }.toolbar{ EditButton() }
+            .navigationTitle("ToDoList")
+            .onChange(of: taskViewModel.taskItems, perform: { _ in
                 taskViewModel.saveTasks()
             })
             .onChange(of: taskViewModel.taskCompletedItems, perform: { _ in

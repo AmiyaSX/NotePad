@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		123CF87E3316B95E2D4085A8 /* Pods_NotePad_NotePadUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA7BF155F23706FC4C2CB62 /* Pods_NotePad_NotePadUITests.framework */; };
+		76174F1F28EE833E00506333 /* NoteCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76174F1E28EE833D00506333 /* NoteCreateView.swift */; };
+		76174F2128EED7B500506333 /* TaskCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76174F2028EED7B500506333 /* TaskCreateView.swift */; };
 		762E154E28EBFB7D00480E55 /* NotePadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762E154D28EBFB7D00480E55 /* NotePadApp.swift */; };
 		762E155028EBFB7D00480E55 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762E154F28EBFB7D00480E55 /* ContentView.swift */; };
 		762E155228EBFB7E00480E55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 762E155128EBFB7E00480E55 /* Assets.xcassets */; };
@@ -53,6 +55,8 @@
 		0FDBC93C93E48A6874168873 /* Pods_NotePad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotePad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA7BF155F23706FC4C2CB62 /* Pods_NotePad_NotePadUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotePad_NotePadUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66840CFCD0CC661C34AA3A1F /* Pods_NotePadTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotePadTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76174F1E28EE833D00506333 /* NoteCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCreateView.swift; sourceTree = "<group>"; };
+		76174F2028EED7B500506333 /* TaskCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateView.swift; sourceTree = "<group>"; };
 		762E154A28EBFB7D00480E55 /* NotePad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotePad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		762E154D28EBFB7D00480E55 /* NotePadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePadApp.swift; sourceTree = "<group>"; };
 		762E154F28EBFB7D00480E55 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -215,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				767D0FC328EC41C200FFD4AE /* NoteDetailView.swift */,
+				76174F1E28EE833D00506333 /* NoteCreateView.swift */,
 				767D0FBE28EC41C200FFD4AE /* NoteItemView.swift */,
 				767D0FBF28EC41C200FFD4AE /* NoteView.swift */,
 			);
@@ -225,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				767D0FC428EC41C200FFD4AE /* TaskDetailView.swift */,
+				76174F2028EED7B500506333 /* TaskCreateView.swift */,
 				767D0FC028EC41C200FFD4AE /* TaskItemView.swift */,
 				767D0FC228EC41C200FFD4AE /* TaskView.swift */,
 			);
@@ -462,9 +468,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				767D0FC728EC41C200FFD4AE /* TaskItemView.swift in Sources */,
+				76174F2128EED7B500506333 /* TaskCreateView.swift in Sources */,
 				767D0FDD28ED4D5000FFD4AE /* TaskViewModel.swift in Sources */,
 				767D0FC928EC41C200FFD4AE /* TaskView.swift in Sources */,
 				762E155028EBFB7D00480E55 /* ContentView.swift in Sources */,
+				76174F1F28EE833E00506333 /* NoteCreateView.swift in Sources */,
 				767D0FDB28ED4D4000FFD4AE /* NoteViewModel.swift in Sources */,
 				767D0FCA28EC41C200FFD4AE /* NoteDetailView.swift in Sources */,
 				767D0FCF28EC41CC00FFD4AE /* NoteItem.swift in Sources */,
@@ -561,7 +569,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -615,7 +623,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -1,5 +1,5 @@
 //
-//  TaskViewController.swift
+//  TaskViewModel.swift
 //  NotePad
 //
 //  Created by rockey220505 on 2022/10/5.
@@ -13,6 +13,7 @@ class TaskViewModel: ObservableObject {
     @Published var taskToComplete: TaskItem?
     @Published var taskToDo: TaskItem?
     @State var isEditable = false
+    @Published var newTask: TaskItem
     @Published var tasksToDelete: [TaskItem]?
     @Published var taskItems: [TaskItem] = {
         guard let data = UserDefaults.standard.data(forKey: "tasks") else { return [] }
@@ -31,12 +32,23 @@ class TaskViewModel: ObservableObject {
     
     static let shared = TaskViewModel()
     
-    private init() { }
+    private init() {
+        newTask = TaskItem(id: -1, title: "Task", content: "")
+    }
     
     
     func didTapAddTask() {
         let id = taskItems.reduce(0) { max($0, $1.id) } + 1
-        taskItems.insert(TaskItem(id: id, title: "TaskTitle", content: "TaskText\(id)"), at: 0)
+        newTask = TaskItem(id: id, title: "Task", content: "")
+    }
+    
+    func findItemIdex(item: TaskItem) -> Int {
+        taskItems.firstIndex(of: item) ?? -1
+    }
+    
+    func addTask() {
+        taskItems.insert(newTask, at: 0)
+        didTapAddTask()
     }
     
     func deleteTask(at offsets: IndexSet) {
