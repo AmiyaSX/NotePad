@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var loginViewModel = LoginViewModel.shared
+    
     var body: some View {
         HomeView()
+            .fullScreenCover(isPresented: $loginViewModel.needRegister, content: {
+                RegisterView()
+            })
+            .fullScreenCover(isPresented: $loginViewModel.needLogin, content: {
+                LoginView()
+            })
+            .environmentObject(loginViewModel)
     }
 }
 

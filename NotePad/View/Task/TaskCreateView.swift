@@ -29,17 +29,31 @@ struct TaskCreateView: View {
                 .background(Color(UIColor(named: "TextFieldColor")!))
                 .cornerRadius(10)
                 .padding(.horizontal)
-                Button(action: {
-                    saveTask()
-                    presentationMode.wrappedValue.dismiss() //解决子视图返回根视图问题
-                }, label: {
-                    Text("Save")
-                        .foregroundColor(Color.white)
-                        .frame(width: 150, height: 40, alignment: .center)
-                        .background(Color.blue)
-                        .cornerRadius(20)
-                        .padding(.init(top: 50, leading: 20, bottom: 20, trailing: 20))
-                })
+                HStack {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss() //解决子视图返回根视图问题
+                    }, label: {
+                        Text("Cancel")
+                            .foregroundColor(Color.white)
+                            .frame(width: 150, height: 40, alignment: .center)
+                            .background(Color.gray)
+                            .cornerRadius(20)
+                            .padding(.init(top: 50, leading: 20, bottom: 20, trailing: 20))
+                    })
+                    Spacer()
+                    Button(action: {
+                        saveTask()
+                        presentationMode.wrappedValue.dismiss() //解决子视图返回根视图问题
+                    }, label: {
+                        Text("Save")
+                            .foregroundColor(Color.white)
+                            .frame(width: 150, height: 40, alignment: .center)
+                            .background(Color.blue)
+                            .cornerRadius(20)
+                            .padding(.init(top: 50, leading: 20, bottom: 20, trailing: 20))
+                    })
+                }
+                
             }
         }
         .frame(maxHeight: .infinity, alignment: .topLeading)

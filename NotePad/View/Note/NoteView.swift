@@ -11,6 +11,7 @@ import Combine
 struct NoteView: View {
     
     @EnvironmentObject private var noteViewModel: NoteViewModel
+    @EnvironmentObject private var loginViewModel: LoginViewModel
     @Environment(\.editMode) private var editMode
     var disableDelete: Bool {
         if let mode = editMode?.wrappedValue, mode == .active {
@@ -52,6 +53,9 @@ struct NoteView: View {
                                 })
                                 Button("Save to iCloud", action: {
                                     
+                                })
+                                Button("Logout", action: {
+                                    loginViewModel.needLogin = true
                                 })
                             } label: {
                                 Label("Menu", systemImage: "ellipsis")

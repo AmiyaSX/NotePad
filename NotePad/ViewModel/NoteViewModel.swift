@@ -17,7 +17,8 @@ class NoteViewModel: ObservableObject {
     @Published var newNote: NoteItem
     @Published var selectNotes = Set<NoteItem>()
     @Published var noteItems: [NoteItem] = {
-        guard let data = UserDefaults.standard.data(forKey: "notes") else { return [] }
+        var user = UserDefaults.standard.string(forKey: "identify")
+        guard let data = UserDefaults.standard.data(forKey: "\(String(describing: user))notes") else { return [] }
         if let json = try? JSONDecoder().decode([NoteItem].self, from: data) {
             return json
         }
@@ -73,10 +74,11 @@ class NoteViewModel: ObservableObject {
     }
     
     func saveNotes() {
+        var user = UserDefaults.standard.string(forKey: "identify")
         noteItems = noteItems.sorted(by: { (lhs, rhs) -> Bool in
             lhs.isPin
         })  //置顶效果
         guard let data = try? JSONEncoder().encode(noteItems) else { return }
-        UserDefaults.standard.set(data, forKey: "notes")
+        UserDefaults.standard.set(data, forKey: "\(String(describing: user))notes")
     }
 }

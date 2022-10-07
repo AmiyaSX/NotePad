@@ -17,14 +17,16 @@ class TaskViewModel: ObservableObject {
     @Published var newTask: TaskItem
     @Published var tasksToDelete: [TaskItem]?
     @Published var taskItems: [TaskItem] = {
-        guard let data = UserDefaults.standard.data(forKey: "tasks") else { return [] }
+        var user = UserDefaults.standard.string(forKey: "identify")
+        guard let data = UserDefaults.standard.data(forKey: "\(String(describing: user))tasks") else { return [] }
         if let json = try? JSONDecoder().decode([TaskItem].self, from: data) {
             return json
         }
         return []
     }()
     @Published var taskCompletedItems: [TaskItem] = {
-        guard let data = UserDefaults.standard.data(forKey: "tasks_done") else { return [] }
+        var user = UserDefaults.standard.string(forKey: "identify")
+        guard let data = UserDefaults.standard.data(forKey: "\(String(describing: user))tasks_done") else { return [] }
         if let json = try? JSONDecoder().decode([TaskItem].self, from: data) {
             return json
         }
@@ -122,6 +124,7 @@ class TaskViewModel: ObservableObject {
     }
     
     func saveTasks() {
+        var user = UserDefaults.standard.string(forKey: "identify")
         taskItems = taskItems.sorted(by: { (lhs, rhs) -> Bool in
             lhs.isPin
         })  //置顶效果
@@ -129,9 +132,9 @@ class TaskViewModel: ObservableObject {
             lhs.isPin
         })  //置顶效果
         guard let data = try? JSONEncoder().encode(taskItems) else { return }
-        UserDefaults.standard.set(data, forKey: "tasks")
+        UserDefaults.standard.set(data, forKey: "\(String(describing: user))tasks")
         guard let data1 = try? JSONEncoder().encode(taskCompletedItems) else { return }
-        UserDefaults.standard.set(data1, forKey: "tasks_done")
+        UserDefaults.standard.set(data1, forKey: "\(String(describing: user))tasks_done")
     }
     
 }

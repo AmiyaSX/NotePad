@@ -10,6 +10,7 @@ import SwiftUI
 struct TaskView: View {
 
     @EnvironmentObject private var taskViewModel: TaskViewModel
+    @EnvironmentObject private var loginViewModel: LoginViewModel
     @Environment(\.editMode) private var editMode
     @State private var isPresented = false
     
@@ -23,15 +24,17 @@ struct TaskView: View {
                                 NavigationLink(destination:  TaskDetailView(task: $taskViewModel.taskItems[taskViewModel.findItemIdex(item: item)], title: taskViewModel.taskItems[taskViewModel.findItemIdex(item: item)].title)) {
                                 }.opacity(0)
                                 HStack(alignment: .firstTextBaseline) {
-                                    Button(action: {
-                                        taskViewModel.taskToComplete = item
-                                        taskViewModel.completeTask()
-                                    }, label: {
-                                        Image(systemName: "square")
-                                            .foregroundColor(Color.green)
-                                    }).buttonStyle(BorderlessButtonStyle())
+                                    if (editMode?.wrappedValue == .inactive) {
+                                        Button(action: {
+                                            taskViewModel.taskToComplete = item
+                                            taskViewModel.completeTask()
+                                        }, label: {
+                                            Image(systemName: "square")
+                                                .foregroundColor(item.isPin ? Color.purple : Color.black)
+                                        }).buttonStyle(BorderlessButtonStyle())
+                                    }
                                     TaskItemView(item: item)
-                                }
+                                }.padding(.init(top: 12, leading: 0, bottom: 0, trailing: 0))
                             }.listRowBackground(item.isPin ? Color(UIColor(named: "NotePinColor" )!) : Color.white)
                         }.onDelete(perform: taskViewModel.deleteTask)
                         .onMove(perform: taskViewModel.moveTask)
@@ -49,15 +52,17 @@ struct TaskView: View {
                                 NavigationLink(destination:  TaskDetailView(task: $taskViewModel.taskCompletedItems[taskViewModel.findCompletedItemIdex(item: item)], title: taskViewModel.taskCompletedItems[taskViewModel.findCompletedItemIdex(item: item)].title)) {
                                 }.opacity(0)
                                 HStack(alignment: .firstTextBaseline) {
-                                    Button(action: {
-                                        taskViewModel.taskToDo = item
-                                        taskViewModel.makeTaskToDo()
-                                    }, label: {
-                                        Image(systemName: "checkmark.square.fill")
-                                            .foregroundColor(Color.gray)
-                                    }).buttonStyle(BorderlessButtonStyle())
+                                    if (editMode?.wrappedValue == .inactive) {
+                                        Button(action: {
+                                            taskViewModel.taskToDo = item
+                                            taskViewModel.makeTaskToDo()
+                                        }, label: {
+                                            Image(systemName: "checkmark.square.fill")
+                                                .foregroundColor(Color.gray)
+                                        }).buttonStyle(BorderlessButtonStyle())
+                                    }
                                     TaskItemView(item: item)
-                                }
+                                }.padding(.init(top: 12, leading: 0, bottom: 0, trailing: 0))
                             }.listRowBackground(Color.white)
                         }.onDelete(perform: taskViewModel.deleteCompletedTask)
                             .onMove(perform: taskViewModel.moveCompletedTask)
@@ -102,6 +107,9 @@ struct TaskView: View {
                             })
                             Button("Save to iCloud", action: {
                                 
+                            })
+                            Button("Logout", action: {
+                                loginViewModel.needLogin = true
                             })
                         } label: {
                             Label("Menu", systemImage: "ellipsis")
