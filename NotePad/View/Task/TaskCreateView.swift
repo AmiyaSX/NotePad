@@ -18,7 +18,7 @@ struct TaskCreateView: View {
             VStack {
                 Text(task.dateText).font(.footnote).frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(Color.gray)
-                    .padding(.init(top: 20, leading: 30, bottom: 20, trailing: 20))
+                    .padding(.init(top: 20, leading: 20, bottom: 20, trailing: 20))
                 VStack {
                     TextField("NoteTitle", text: $title, prompt: Text("Title"))
                         .font(.title3)

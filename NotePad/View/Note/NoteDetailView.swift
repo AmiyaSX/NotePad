@@ -34,6 +34,7 @@ struct NoteDetailView: View {
                 note.date = Date()
         })
         .frame(maxHeight: .infinity, alignment: .topLeading)
+        .background(note.isPin ? Color(UIColor(named: "NotePinColor" )!) : Color.white)
             
     }
 }

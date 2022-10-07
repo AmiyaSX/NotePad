@@ -24,13 +24,21 @@ struct NoteItemView: View {
                 .multilineTextAlignment(.leading).padding(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
-            Text(item.dateText)
-                .font(.caption2)
-                .italic()
-                .lineLimit(1)
-                .multilineTextAlignment(.leading).padding(.trailing).padding(.bottom)
-                .frame(maxWidth: .infinity, alignment: .trailing)
-        }.background(Color(UIColor(named: item.isPin ? "NotePinColor" : "CardColor2")!))
+            HStack(alignment: .firstTextBaseline) {
+                if (item.isPin) {
+                    Image(systemName: "pin")
+                        .padding()
+                    Spacer()
+                }
+                Text(item.dateText)
+                    .font(.caption2)
+                    .italic()
+                    .lineLimit(1)
+                    .multilineTextAlignment(.leading).padding(.trailing).padding(.bottom)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+        }.background(item.isPin ? Color(UIColor(named: "NotePinColor" )!) : Color.white)
          .cornerRadius(20)
+         .shadow(color: Color(UIColor(named:  "ShadowColor")!), radius: 30)
     }
 }

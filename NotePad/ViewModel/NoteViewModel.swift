@@ -13,8 +13,9 @@ class NoteViewModel: ObservableObject {
     @Published var notesToDelete: [NoteItem]?
     @Published var showAlert = false
     @Published var isEditable = false
+    @Published var isEditMode = true
     @Published var newNote: NoteItem
-    @State var selectNotes = Set<NoteItem>()
+    @Published var selectNotes = Set<NoteItem>()
     @Published var noteItems: [NoteItem] = {
         guard let data = UserDefaults.standard.data(forKey: "notes") else { return [] }
         if let json = try? JSONDecoder().decode([NoteItem].self, from: data) {
@@ -29,18 +30,18 @@ class NoteViewModel: ObservableObject {
         newNote = NoteItem(id: -1, title: "Title", content: "")
     }
     
-    func findItemIdex(item: NoteItem) -> Int {
-        NoteViewModel.shared.noteItems.firstIndex(of: item) ?? -1
-    }
-    
-    func didTapAddNote() {
+    private func addNewNote() {
         let id = noteItems.reduce(0) { max($0, $1.id) } + 1
         newNote = NoteItem(id: id, title: "Title",content: "", date: Date())
     }
     
+    func findItemIdex(item: NoteItem) -> Int {
+        noteItems.firstIndex(of: item) ?? -1
+    }
+    
     func addNote() {
         noteItems.insert(newNote, at: 0)
-        didTapAddNote()
+        addNewNote()
     }
     
     func moveNote(from source: IndexSet, to destination: Int) {
@@ -59,7 +60,22 @@ class NoteViewModel: ObservableObject {
         noteItems = noteItems.filter { !notesToDelete.contains($0) }
     }
     
+    func deleteSelectNotes() {
+        noteItems = noteItems.filter { !selectNotes.contains($0) }
+    }
+    
+    func pinNotes() {
+        for item in noteItems {
+            if (selectNotes.contains(item)) {
+                noteItems[findItemIdex(item: item)].isPin.toggle()
+            }
+        }
+    }
+    
     func saveNotes() {
+        noteItems = noteItems.sorted(by: { (lhs, rhs) -> Bool in
+            lhs.isPin
+        })  //置顶效果
         guard let data = try? JSONEncoder().encode(noteItems) else { return }
         UserDefaults.standard.set(data, forKey: "notes")
     }

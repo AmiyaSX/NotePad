@@ -10,12 +10,13 @@ import SwiftUI
 struct TaskView: View {
 
     @EnvironmentObject private var taskViewModel: TaskViewModel
+    @Environment(\.editMode) private var editMode
     @State private var isPresented = false
     
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
-                List {
+                List(selection: $taskViewModel.selectTasks) {
                     Section(header: Text("Todo(\(taskViewModel.taskItems.count))").font(.subheadline)) {
                         ForEach(taskViewModel.taskItems, id: \.self) { item in
                             ZStack {
@@ -31,34 +32,41 @@ struct TaskView: View {
                                     }).buttonStyle(BorderlessButtonStyle())
                                     TaskItemView(item: item)
                                 }
-                            }
+                            }.listRowBackground(item.isPin ? Color(UIColor(named: "NotePinColor" )!) : Color.white)
                         }.onDelete(perform: taskViewModel.deleteTask)
-                            .onMove(perform: taskViewModel.moveTask)
-                         .onLongPressGesture {
+                        .onMove(perform: taskViewModel.moveTask)
+                        .deleteDisabled(true)
+                        .onLongPressGesture {
                             withAnimation {
                                 taskViewModel.isEditable = true
                             }
-                         }
+                         }.buttonStyle(PlainButtonStyle())
+                            
                     }
                     Section(header: Text("Completed(\(taskViewModel.taskCompletedItems.count))").font(.subheadline)) {
                         ForEach(taskViewModel.taskCompletedItems, id: \.self) { item in
-                            HStack(alignment: .firstTextBaseline) {
-                                Button(action: {
-                                    taskViewModel.taskToDo = item
-                                    taskViewModel.makeTaskToDo()
-                                }, label: {
-                                    Image(systemName: "checkmark.square.fill")
-                                        .foregroundColor(Color.gray)
-                                }).buttonStyle(BorderlessButtonStyle())
-                                TaskItemView(item: item)
-                            }
+                            ZStack {
+                                NavigationLink(destination:  TaskDetailView(task: $taskViewModel.taskCompletedItems[taskViewModel.findCompletedItemIdex(item: item)], title: taskViewModel.taskCompletedItems[taskViewModel.findCompletedItemIdex(item: item)].title)) {
+                                }.opacity(0)
+                                HStack(alignment: .firstTextBaseline) {
+                                    Button(action: {
+                                        taskViewModel.taskToDo = item
+                                        taskViewModel.makeTaskToDo()
+                                    }, label: {
+                                        Image(systemName: "checkmark.square.fill")
+                                            .foregroundColor(Color.gray)
+                                    }).buttonStyle(BorderlessButtonStyle())
+                                    TaskItemView(item: item)
+                                }
+                            }.listRowBackground(Color.white)
                         }.onDelete(perform: taskViewModel.deleteCompletedTask)
-                            .onMove(perform: taskViewModel.moveTask)
+                            .onMove(perform: taskViewModel.moveCompletedTask)
+                            .deleteDisabled(true)
                          .onLongPressGesture {
                             withAnimation {
                                 taskViewModel.isEditable = true
                             }
-                         }
+                         }.buttonStyle(PlainButtonStyle())
                     }
                 }
                 Button(action: {
@@ -76,10 +84,31 @@ struct TaskView: View {
                     TaskCreateView(task: $taskViewModel.newTask, title: taskViewModel.newTask.title)
                         .presentationDetents([.height(250)])
                 }
-
-                    
-                
-            }.toolbar{ EditButton() }
+            }.toolbar{
+                HStack {
+                    if (editMode?.wrappedValue == .active) {
+                        Button(action: taskViewModel.deleteSelectTasks, label: {
+                            Image(systemName: "trash")
+                        })
+                        Button(action: taskViewModel.pinTasks, label: {
+                            Image(systemName: "pin")
+                        })
+                    }
+                    EditButton()
+                    if (editMode?.wrappedValue == .inactive) {
+                        Menu {
+                            Button("Import from Clipboard", action: {
+                                
+                            })
+                            Button("Save to iCloud", action: {
+                                
+                            })
+                        } label: {
+                            Label("Menu", systemImage: "ellipsis")
+                        }
+                    }
+                }
+            }.environment(\.editMode, editMode)
             .navigationTitle("ToDoList")
             .onChange(of: taskViewModel.taskItems, perform: { _ in
                 taskViewModel.saveTasks()

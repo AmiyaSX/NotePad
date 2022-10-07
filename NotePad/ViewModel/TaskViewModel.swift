@@ -13,6 +13,7 @@ class TaskViewModel: ObservableObject {
     @Published var taskToComplete: TaskItem?
     @Published var taskToDo: TaskItem?
     @State var isEditable = false
+    @Published var selectTasks = Set<TaskItem>()
     @Published var newTask: TaskItem
     @Published var tasksToDelete: [TaskItem]?
     @Published var taskItems: [TaskItem] = {
@@ -37,7 +38,7 @@ class TaskViewModel: ObservableObject {
     }
     
     
-    func didTapAddTask() {
+    private func addNewTask() {
         let id = taskItems.reduce(0) { max($0, $1.id) } + 1
         newTask = TaskItem(id: id, title: "Task", content: "")
     }
@@ -46,9 +47,13 @@ class TaskViewModel: ObservableObject {
         taskItems.firstIndex(of: item) ?? -1
     }
     
+    func findCompletedItemIdex(item: TaskItem) -> Int {
+        taskCompletedItems.firstIndex(of: item) ?? -1
+    }
+    
     func addTask() {
         taskItems.insert(newTask, at: 0)
-        didTapAddTask()
+        addNewTask()
     }
     
     func deleteTask(at offsets: IndexSet) {
@@ -76,6 +81,13 @@ class TaskViewModel: ObservableObject {
         }
     }
     
+    func moveCompletedTask(from source: IndexSet, to destination: Int) {
+        taskCompletedItems.move(fromOffsets: source, toOffset: destination)
+        withAnimation {
+            isEditable = false
+        }
+    }
+    
     func completeTask() {
         guard var taskToComplete = taskToComplete else {
             return
@@ -94,7 +106,28 @@ class TaskViewModel: ObservableObject {
         taskItems.append(taskToDo)
     }
     
+    func deleteSelectTasks() {
+        taskItems = taskItems.filter { !selectTasks.contains($0) }
+    }
+    
+    func pinTasks() {
+        for item in selectTasks {
+            if (taskItems.contains(item)) {
+                taskItems[findItemIdex(item: item)].isPin.toggle()
+            }
+            if (taskCompletedItems.contains(item)) {
+                taskCompletedItems[findCompletedItemIdex(item: item)].isPin.toggle()
+            }
+        }
+    }
+    
     func saveTasks() {
+        taskItems = taskItems.sorted(by: { (lhs, rhs) -> Bool in
+            lhs.isPin
+        })  //置顶效果
+        taskCompletedItems = taskCompletedItems.sorted(by: { (lhs, rhs) -> Bool in
+            lhs.isPin
+        })  //置顶效果
         guard let data = try? JSONEncoder().encode(taskItems) else { return }
         UserDefaults.standard.set(data, forKey: "tasks")
         guard let data1 = try? JSONEncoder().encode(taskCompletedItems) else { return }

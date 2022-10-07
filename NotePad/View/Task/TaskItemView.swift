@@ -26,12 +26,18 @@ struct TaskItemView: View {
             }
                     
             Spacer()
-            Text(item.dateText)
-                .font(.caption2)
-                .italic()
-                .foregroundColor(item.isComleted ? Color.gray : Color.black)
-                .lineLimit(nil)
-                .frame(maxWidth: .infinity, alignment: .trailing)
+            HStack(alignment: .firstTextBaseline) {
+                if (item.isPin) {
+                    Image(systemName: "pin")
+                        .foregroundColor(item.isComleted ? Color.gray : Color.primary)
+                }
+                Text(item.dateText)
+                    .font(.caption2)
+                    .italic()
+                    .foregroundColor(item.isComleted ? Color.gray : Color.black)
+                    .lineLimit(nil)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
         }
     }
     
