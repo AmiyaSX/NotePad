@@ -14,7 +14,6 @@ struct NoteView: View {
     @Environment(\.editMode) private var editMode
     @State var searchQuery = ""
     @State var fliterNotes = NoteViewModel.shared.noteItems
-    
     private var disableDelete: Bool {
         if let mode = editMode?.wrappedValue, mode == .active {
             return true
@@ -73,7 +72,7 @@ struct NoteView: View {
                          .imageScale(.large)
                          .foregroundColor(.white)
                          .frame(width: 50, height: 50, alignment:.center)
-                         .background(Color.yellow)
+                         .background(Color.orange)
                          .clipShape(Circle()).padding(12)
                          .shadow(color: .primary, radius: 60, x: 0.1, y: 0.1)
                  })

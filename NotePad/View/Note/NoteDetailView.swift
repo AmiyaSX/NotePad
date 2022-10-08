@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import MarkdownUI
 
 //支持Markdown
@@ -13,6 +14,7 @@ struct NoteDetailView: View {
     @Binding var note: NoteItem
     @State var title: String
     @State var content: String
+    @State var isEditing: Bool = false
     
     var body: some View {
         ZStack {
@@ -24,9 +26,26 @@ struct NoteDetailView: View {
                     .foregroundColor(Color.gray)
                     .padding(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
                 Divider().padding(.horizontal)
-                TextField("NoteContent", text: $content, prompt: Text("Type here to start..."))
-                    .padding(.init(top: 0, leading: 20, bottom: 200, trailing: 20))
-                    .lineLimit(200)
+                if (isEditing) {
+                   TextEditor(text: $content)
+                       .padding(.init(top: 0, leading: 20, bottom: 200, trailing: 20))
+                       .lineLimit(200)
+                       .onSubmit {
+                           isEditing = false
+                       }
+               } else {
+                   HStack {
+                       if (content == "") {
+                           Text("Type here to start...").fixedSize().foregroundColor(.gray)
+                               .frame(maxWidth: .infinity, alignment: .leading)
+                       } else {
+                           Markdown(content)
+                       }
+                   }.onTapGesture {
+                       isEditing = true
+                   }.padding(.horizontal)
+               }
+                
             }
         }.navigationBarItems(trailing: Image(systemName: "doc.on.doc").onTapGesture {
                 note.title = title
