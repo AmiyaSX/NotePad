@@ -63,6 +63,6 @@ struct TaskDetailView: View {
             }
         }
         .frame(maxHeight: .infinity, alignment: .topLeading)
-        .background(task.isPin && !task.isComleted ? Color(UIColor(named: "NotePinColor" )!) : Color.white)
+        .background(task.isPin && !task.isComleted ? Color(UIColor(named: "TaskPinColor" )!) : Color.white)
     }
 }

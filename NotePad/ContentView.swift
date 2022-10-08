@@ -19,6 +19,9 @@ struct ContentView: View {
                 LoginView()
             })
             .environmentObject(loginViewModel)
+            .onAppear() {
+                loginViewModel.checkLocalAccount()
+            }
     }
 }
 

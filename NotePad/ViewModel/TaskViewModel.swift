@@ -16,22 +16,8 @@ class TaskViewModel: ObservableObject {
     @Published var selectTasks = Set<TaskItem>()
     @Published var newTask: TaskItem
     @Published var tasksToDelete: [TaskItem]?
-    @Published var taskItems: [TaskItem] = {
-        var user = UserDefaults.standard.string(forKey: "identify")
-        guard let data = UserDefaults.standard.data(forKey: "\(String(describing: user))tasks") else { return [] }
-        if let json = try? JSONDecoder().decode([TaskItem].self, from: data) {
-            return json
-        }
-        return []
-    }()
-    @Published var taskCompletedItems: [TaskItem] = {
-        var user = UserDefaults.standard.string(forKey: "identify")
-        guard let data = UserDefaults.standard.data(forKey: "\(String(describing: user))tasks_done") else { return [] }
-        if let json = try? JSONDecoder().decode([TaskItem].self, from: data) {
-            return json
-        }
-        return []
-    }()
+    @Published var taskItems: [TaskItem] = []
+    @Published var taskCompletedItems: [TaskItem] = []
     
     static let shared = TaskViewModel()
     
@@ -123,8 +109,26 @@ class TaskViewModel: ObservableObject {
         }
     }
     
+    func dataUpdate() {
+        let user = UserDefaults.standard.string(forKey: "identify")
+        taskItems = {
+            guard let data = UserDefaults.standard.data(forKey: "\(String(describing: user))tasks") else { return [] }
+            if let json = try? JSONDecoder().decode([TaskItem].self, from: data) {
+                return json
+            }
+            return []
+        }()
+        taskCompletedItems = {
+            guard let data = UserDefaults.standard.data(forKey: "\(String(describing: user))tasks_done") else { return [] }
+            if let json = try? JSONDecoder().decode([TaskItem].self, from: data) {
+                return json
+            }
+            return []
+        }()
+    }
+    
     func saveTasks() {
-        var user = UserDefaults.standard.string(forKey: "identify")
+        let user = UserDefaults.standard.string(forKey: "identify")
         taskItems = taskItems.sorted(by: { (lhs, rhs) -> Bool in
             lhs.isPin
         })  //置顶效果

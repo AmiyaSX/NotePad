@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  RegisterView.swift
 //  NotePad
 //
 //  Created by rockey220505 on 2022/10/7.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct RegisterView: View {
     @State private var showPwd = false
     @State private var isPresented = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -16,7 +16,7 @@ struct LoginView: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack {
-                Text("Sign in")
+                Text("Sign up")
                     .font(.title)
                     .bold()
                     .padding(.init(top: 20, leading: 20, bottom: 30, trailing: 20))
@@ -31,59 +31,64 @@ struct LoginView: View {
                 HStack {
                     Image(systemName: "lock").padding(.leading)
                     if showPwd {
-                        TextField("Please input password", text: $loginViewModel.password, onCommit: {
-                            
-                        }).padding(14)
+                        TextField("Please input password", text: $loginViewModel.password).padding(14)
                     } else {
-                        SecureField("Please input password", text: $loginViewModel.password, onCommit: {
-                            
-                        }).padding(14)
+                        SecureField("Please input password", text: $loginViewModel.password).padding(14)
+                    }
+                }.background(Color(UIColor(named: "TextFieldColor")!))
+                .cornerRadius(10)
+                .padding(.init(top: 10, leading: 50, bottom: 10, trailing: 50))
+                .frame(maxWidth: .infinity, alignment: .center)
+                HStack {
+                    Image(systemName: "lock").padding(.leading)
+                    if showPwd {
+                        TextField("Please input password", text: $loginViewModel.verifyPassword).padding(14)
+                    } else {
+                        SecureField("Please input password", text: $loginViewModel.verifyPassword).padding(14)
                     }
                 }.background(Color(UIColor(named: "TextFieldColor")!))
                 .cornerRadius(10)
                 .padding(.init(top: 10, leading: 50, bottom: 0, trailing: 50))
                 .frame(maxWidth: .infinity, alignment: .center)
                 Button(action: {
-                    if (loginViewModel.login()) {
+                    if (loginViewModel.register()) {
+                        loginViewModel.needLogin = true
                         presentationMode.wrappedValue.dismiss()
                     } else {
-                        isPresented = true
+                       isPresented = true
                     }
                 }, label: {
-                    Text("LOGIN")
+                    Text("REGISTE")
                         .bold()
                         .foregroundColor(Color.white)
                         .frame(width: 290, height: 50, alignment: .center)
                         .background(Color.yellow)
                         .cornerRadius(10)
-                        .padding(.init(top: 50, leading: 20, bottom: 0, trailing: 20))
-                })
+                        .padding(.init(top: 50, leading: 20, bottom: 20, trailing: 20))
+                }).buttonStyle(.borderless)
                 Spacer()
-            }.frame(maxHeight: 580, alignment: .topLeading)
+            }.alert(Text("Registe Failed"), isPresented: $isPresented, actions: {}, message: { Text("Please Check Your Password")})
+            .frame(maxHeight: 580, alignment: .topLeading)
             .ignoresSafeArea()
             .background(Color.white)
             .cornerRadius(20)
             HStack {
-                Text("Don't have an account?")
-                Text("Sign up").foregroundColor(Color.red)
+                Text("Already have an account?")
+                Text("Sign in").foregroundColor(Color.red)
                     .onTapGesture {
-                        loginViewModel.needLogin = false
-                        loginViewModel.needRegister = true
+                        loginViewModel.needLogin = true
+                        loginViewModel.needRegister = false
                     }
             }.frame(maxWidth: .infinity, alignment: .center)
             .padding(.init(top: 50, leading: 20, bottom: 80, trailing: 20))
-
-        }.alert(Text("Login Failed"), isPresented: $isPresented, actions: {
-            
-        }, message: {  Text("Please Check Your Password")})
-        .frame(maxHeight: .infinity,alignment: .bottomTrailing)
-        .ignoresSafeArea()
+        }.frame(maxHeight: .infinity,alignment: .bottomTrailing)
+            .ignoresSafeArea()
         .background(Color.yellow)
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
+struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        RegisterView()
     }
 }

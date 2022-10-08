@@ -13,17 +13,9 @@ class NoteViewModel: ObservableObject {
     @Published var notesToDelete: [NoteItem]?
     @Published var showAlert = false
     @Published var isEditable = false
-    @Published var isEditMode = true
     @Published var newNote: NoteItem
     @Published var selectNotes = Set<NoteItem>()
-    @Published var noteItems: [NoteItem] = {
-        var user = UserDefaults.standard.string(forKey: "identify")
-        guard let data = UserDefaults.standard.data(forKey: "\(String(describing: user))notes") else { return [] }
-        if let json = try? JSONDecoder().decode([NoteItem].self, from: data) {
-            return json
-        }
-        return []
-    }()
+    @Published var noteItems: [NoteItem] = []
     
     static let shared = NoteViewModel()
     
@@ -73,8 +65,19 @@ class NoteViewModel: ObservableObject {
         }
     }
     
+    func dataUpdate() {
+        let user = UserDefaults.standard.string(forKey: "identify")
+        noteItems = {
+            guard let data = UserDefaults.standard.data(forKey: "\(String(describing: user))notes") else { return [] }
+            if let json = try? JSONDecoder().decode([NoteItem].self, from: data) {
+                return json
+            }
+            return []
+        }()
+    }
+    
     func saveNotes() {
-        var user = UserDefaults.standard.string(forKey: "identify")
+        let user = UserDefaults.standard.string(forKey: "identify")
         noteItems = noteItems.sorted(by: { (lhs, rhs) -> Bool in
             lhs.isPin
         })  //置顶效果

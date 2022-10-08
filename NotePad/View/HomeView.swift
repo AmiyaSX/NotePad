@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct HomeView: View {
-
     @StateObject var noteViewModel = NoteViewModel.shared
     @StateObject var taskViewModel = TaskViewModel.shared
     @EnvironmentObject var loginViewModel: LoginViewModel
+    
     var SearchBar: some View {
         return HStack(spacing: 6) {
             Image(systemName: "magnifyingglass").font(.title3).foregroundColor(.gray)
@@ -36,8 +36,11 @@ struct HomeView: View {
                 }
             }
         }.environmentObject(noteViewModel)
-         .environmentObject(taskViewModel)
-       
+        .environmentObject(taskViewModel)
+        .onChange(of: loginViewModel.userAccount, perform: { _ in
+             noteViewModel.dataUpdate()
+             taskViewModel.dataUpdate()
+         })
     }
     
 }

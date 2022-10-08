@@ -20,6 +20,7 @@
 		76545E4428F03B19009AC18C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76545E4328F03B19009AC18C /* LoginView.swift */; };
 		76545E4628F03EEF009AC18C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76545E4528F03EEF009AC18C /* LoginViewModel.swift */; };
 		76545E4828F04B38009AC18C /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76545E4728F04B38009AC18C /* RegisterView.swift */; };
+		76545E4B28F1230B009AC18C /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76545E4A28F1230B009AC18C /* UserView.swift */; };
 		767D0FC528EC41C200FFD4AE /* NoteItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FBE28EC41C200FFD4AE /* NoteItemView.swift */; };
 		767D0FC628EC41C200FFD4AE /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FBF28EC41C200FFD4AE /* NoteView.swift */; };
 		767D0FC728EC41C200FFD4AE /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D0FC028EC41C200FFD4AE /* TaskItemView.swift */; };
@@ -73,6 +74,7 @@
 		76545E4328F03B19009AC18C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		76545E4528F03EEF009AC18C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		76545E4728F04B38009AC18C /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		76545E4A28F1230B009AC18C /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		767D0FBE28EC41C200FFD4AE /* NoteItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteItemView.swift; sourceTree = "<group>"; };
 		767D0FBF28EC41C200FFD4AE /* NoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		767D0FC028EC41C200FFD4AE /* TaskItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskItemView.swift; sourceTree = "<group>"; };
@@ -194,14 +196,23 @@
 			path = NotePadUITests;
 			sourceTree = "<group>";
 		};
+		76545E4928F071D1009AC18C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				76545E4728F04B38009AC18C /* RegisterView.swift */,
+				76545E4328F03B19009AC18C /* LoginView.swift */,
+				76545E4A28F1230B009AC18C /* UserView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		767D0FBD28EC41C200FFD4AE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				76545E4928F071D1009AC18C /* Login */,
 				767D0FD528EC609100FFD4AE /* Task */,
 				767D0FD428EC608A00FFD4AE /* Note */,
 				767D0FC128EC41C200FFD4AE /* HomeView.swift */,
-				76545E4328F03B19009AC18C /* LoginView.swift */,
-				76545E4728F04B38009AC18C /* RegisterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -483,6 +494,7 @@
 				762E155028EBFB7D00480E55 /* ContentView.swift in Sources */,
 				76174F1F28EE833E00506333 /* NoteCreateView.swift in Sources */,
 				767D0FDB28ED4D4000FFD4AE /* NoteViewModel.swift in Sources */,
+				76545E4B28F1230B009AC18C /* UserView.swift in Sources */,
 				767D0FCA28EC41C200FFD4AE /* NoteDetailView.swift in Sources */,
 				76545E4828F04B38009AC18C /* RegisterView.swift in Sources */,
 				76545E4628F03EEF009AC18C /* LoginViewModel.swift in Sources */,

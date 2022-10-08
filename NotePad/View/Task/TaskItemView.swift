@@ -29,7 +29,7 @@ struct TaskItemView: View {
             HStack(alignment: .firstTextBaseline) {
                 if (item.isPin) {
                     Image(systemName: "pin")
-                        .foregroundColor(item.isComleted ? Color.gray : Color.primary)
+                        .foregroundColor(item.isComleted ? Color.gray : Color.blue)
                 }
                 Text(item.dateText)
                     .font(.caption2)
