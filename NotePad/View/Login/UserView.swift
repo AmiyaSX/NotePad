@@ -21,6 +21,7 @@ struct UserView: View {
             Spacer()
             Text(loginViewModel.userAccount)
                 .font(.title3)
+                .lineLimit(1)
                 .foregroundColor(Color.primary)
                 .frame(width: 75)
         }

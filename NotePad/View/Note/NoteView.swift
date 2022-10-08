@@ -52,6 +52,13 @@ struct NoteView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
+                if (noteViewModel.noteItems.count == 0) {
+                    HStack {
+                        Text("You Haven't Have Any Note Yet.")
+                            .font(.title2)
+                            .foregroundColor(.gray)
+                    }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                }
                 List(selection: $noteViewModel.selectNotes) {
                     ForEach(noteViewModel.noteItems, id: \.self) { item in
                         if (item.title.localizedCaseInsensitiveContains(searchQuery) || searchQuery == "" || item.content.localizedCaseInsensitiveContains(searchQuery)) {
