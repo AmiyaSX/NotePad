@@ -13,7 +13,7 @@ struct TaskView: View {
     @EnvironmentObject private var loginViewModel: LoginViewModel
     @Environment(\.editMode) private var editMode
     @State private var isPresented = false
-    let pc = PasteboardControler()
+    private let pc = PasteboardControler()
     
     private var TrailingMenu: some View {
         return HStack {
@@ -31,9 +31,6 @@ struct TaskView: View {
                     Button("Import from Pasteboard", action: {
                         taskViewModel.taskItems += pc.importTasksfromPasteboard()
                     })
-                    Button("Save to iCloud", action: {
-                        
-                    })
                     Button("Logout", action: {
                         loginViewModel.needLogin = true
                     })
@@ -41,6 +38,25 @@ struct TaskView: View {
                     Label("Menu", systemImage: "ellipsis")
                 }
             }
+        }
+    }
+    private var floatButton: some View {
+        return HStack {
+            Button(action: {
+                isPresented.toggle()
+            }) {
+                Image(systemName: "plus")
+                    .imageScale(.large)
+                    .foregroundColor(.white)
+                    .frame(width: 50, height: 50, alignment:.center)
+                    .background(Color.green)
+                    .clipShape(Circle())
+                    .shadow(color: .primary, radius: 60, x: 0.1, y: 0.1)
+            }.padding(12)
+                .sheet(isPresented: $isPresented) {
+                    TaskCreateView(task: $taskViewModel.newTask, title: taskViewModel.newTask.title)
+                        .presentationDetents([.height(250)])
+                }
         }
     }
     
@@ -108,21 +124,7 @@ struct TaskView: View {
                          }.buttonStyle(PlainButtonStyle())
                     }
                 }
-                Button(action: {
-                    isPresented.toggle()
-                }) {
-                    Image(systemName: "plus")
-                        .imageScale(.large)
-                        .foregroundColor(.white)
-                        .frame(width: 50, height: 50, alignment:.center)
-                        .background(Color.green)
-                        .clipShape(Circle())
-                        .shadow(color: .primary, radius: 60, x: 0.1, y: 0.1)
-                }.padding(12)
-                .sheet(isPresented: $isPresented) {
-                    TaskCreateView(task: $taskViewModel.newTask, title: taskViewModel.newTask.title)
-                        .presentationDetents([.height(250)])
-                }
+                floatButton
             }.navigationBarItems(leading: UserView().frame(maxWidth: .infinity, alignment: .leading), trailing: TrailingMenu)
             .environment(\.editMode, editMode)
             .navigationTitle("ToDoList")

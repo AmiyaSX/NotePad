@@ -14,7 +14,7 @@ struct NoteView: View {
     @Environment(\.editMode) private var editMode
     @State var searchQuery = ""
     @State var fliterNotes = NoteViewModel.shared.noteItems
-    let pc = PasteboardControler()
+    private let pc = PasteboardControler()
     private var disableDelete: Bool {
         if let mode = editMode?.wrappedValue, mode == .active {
             return true
@@ -37,9 +37,6 @@ struct NoteView: View {
                     Button("Import from Pasteboard", action: {
                         noteViewModel.noteItems += pc.importNotesfromPasteboard()
                     })
-                    Button("Save to iCloud", action: {
-                        
-                    })
                     Button("Logout", action: {
                         loginViewModel.needLogin = true
                     })
@@ -49,15 +46,24 @@ struct NoteView: View {
             }
         }
     }
+    private var floatButton: some View {
+        return NavigationLink(destination: NoteCreateView(note: $noteViewModel.newNote, title: noteViewModel.newNote.title), label: {
+            Image(systemName: "plus")
+                .imageScale(.large)
+                .foregroundColor(.white)
+                .frame(width: 50, height: 50, alignment:.center)
+                .background(Color.orange)
+                .clipShape(Circle()).padding(12)
+                .shadow(color: .primary, radius: 60, x: 0.1, y: 0.1)
+        })
+    }
     
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
                 if (noteViewModel.noteItems.count == 0) {
                     HStack {
-                        Text("You Haven't Have Any Note Yet.")
-                            .font(.title2)
-                            .foregroundColor(.gray)
+                        Text("You Haven't Have Any Note Yet.").font(.title2).foregroundColor(.gray)
                     }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }
                 List(selection: $noteViewModel.selectNotes) {
@@ -75,15 +81,7 @@ struct NoteView: View {
                     .listRowSeparator(.hidden)
                 }.listStyle(.plain)
                 .navigationBarItems(leading: UserView().frame(maxWidth: .infinity, alignment: .leading), trailing: TrailingMenu).environment(\.editMode, editMode)
-                NavigationLink(destination: NoteCreateView(note: $noteViewModel.newNote, title: noteViewModel.newNote.title), label: {
-                     Image(systemName: "plus")
-                         .imageScale(.large)
-                         .foregroundColor(.white)
-                         .frame(width: 50, height: 50, alignment:.center)
-                         .background(Color.orange)
-                         .clipShape(Circle()).padding(12)
-                         .shadow(color: .primary, radius: 60, x: 0.1, y: 0.1)
-                 })
+                floatButton
             }
             .navigationTitle("Notes (\(NoteViewModel.shared.noteItems.count))")
             .onChange(of: noteViewModel.noteItems, perform: { _ in

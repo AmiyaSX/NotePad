@@ -13,30 +13,17 @@ struct TaskItemView: View {
     var body: some View {
         VStack(alignment: .leading) {
             if (item.isComleted) {
-                Text(item.title)
-                    .font(.headline)
-                    .foregroundColor(Color.gray)
-                    .strikethrough()
-                    .padding(.top)
-                    
+                Text(item.title).font(.headline).foregroundColor(Color.gray).strikethrough().padding(.top)
             } else {
-                Text(item.title)
-                    .font(.headline)
-                    .padding(.top)
+                Text(item.title).font(.headline).padding(.top)
             }
-                    
             Spacer()
             HStack(alignment: .firstTextBaseline) {
                 if (item.isPin) {
                     Image(systemName: "pin")
                         .foregroundColor(item.isComleted ? Color.gray : Color.blue)
                 }
-                Text(item.dateText)
-                    .font(.caption2)
-                    .italic()
-                    .foregroundColor(item.isComleted ? Color.gray : Color.black)
-                    .lineLimit(nil)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+                Text(item.dateText).font(.caption2).italic().foregroundColor(item.isComleted ? Color.gray : Color.black).lineLimit(nil).frame(maxWidth: .infinity, alignment: .trailing)
             }
         }
     }

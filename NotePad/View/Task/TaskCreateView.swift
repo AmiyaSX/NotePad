@@ -38,7 +38,7 @@ struct TaskCreateView: View {
                             .frame(width: 150, height: 40, alignment: .center)
                             .background(Color.gray)
                             .cornerRadius(20)
-                            .padding(.init(top: 50, leading: 20, bottom: 20, trailing: 20))
+                            .padding(.init(top: 60, leading: 20, bottom: 0, trailing: 20))
                     })
                     Spacer()
                     Button(action: {
@@ -48,9 +48,9 @@ struct TaskCreateView: View {
                         Text("Save")
                             .foregroundColor(Color.white)
                             .frame(width: 150, height: 40, alignment: .center)
-                            .background(Color.blue)
+                            .background(Color.green)
                             .cornerRadius(20)
-                            .padding(.init(top: 50, leading: 20, bottom: 20, trailing: 20))
+                            .padding(.init(top: 60, leading: 20, bottom: 0, trailing: 20))
                     })
                 }
                 
