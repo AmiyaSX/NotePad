@@ -14,6 +14,7 @@ struct NoteView: View {
     @Environment(\.editMode) private var editMode
     @State var searchQuery = ""
     @State var fliterNotes = NoteViewModel.shared.noteItems
+    let pc = PasteboardControler()
     private var disableDelete: Bool {
         if let mode = editMode?.wrappedValue, mode == .active {
             return true
@@ -34,7 +35,7 @@ struct NoteView: View {
             if (editMode?.wrappedValue == .inactive) {
                 Menu {
                     Button("Import from Pasteboard", action: {
-                        
+                        noteViewModel.noteItems += pc.importNotesfromPasteboard()
                     })
                     Button("Save to iCloud", action: {
                         

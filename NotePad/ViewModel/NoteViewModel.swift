@@ -20,12 +20,12 @@ class NoteViewModel: ObservableObject {
     static let shared = NoteViewModel()
     
     private init() {
-        newNote = NoteItem(id: -1, title: "Title", content: "")
+        newNote = NoteItem(title: "Title", content: "")
     }
     
     private func addNewNote() {
-        let id = noteItems.reduce(0) { max($0, $1.id) } + 1
-        newNote = NoteItem(id: id, title: "Title",content: "", date: Date())
+//        let id = noteItems.reduce(0) { max($0, $1.id) } + 1
+        newNote = NoteItem(title: "Title",content: "", date: Date())
     }
     
     func findItemIdex(item: NoteItem) -> Int {

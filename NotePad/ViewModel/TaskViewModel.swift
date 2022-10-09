@@ -22,13 +22,13 @@ class TaskViewModel: ObservableObject {
     static let shared = TaskViewModel()
     
     private init() {
-        newTask = TaskItem(id: -1, title: "Task", content: "")
+        newTask = TaskItem(title: "Task")
     }
     
     
     private func addNewTask() {
-        let id = taskItems.reduce(0) { max($0, $1.id) } + 1
-        newTask = TaskItem(id: id, title: "Task", content: "")
+//        let id = taskItems.reduce(0) { max($0, $1.id) } + 1
+        newTask = TaskItem(title: "Task")
     }
     
     func findItemIdex(item: TaskItem) -> Int {

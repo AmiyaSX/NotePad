@@ -8,7 +8,7 @@
 import Foundation
 
 struct NoteItem: Codable, Hashable, Identifiable {
-    let id: Int
+    var id = UUID()
     var title: String
     var content: String
     var date = Date()

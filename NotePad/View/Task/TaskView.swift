@@ -13,6 +13,7 @@ struct TaskView: View {
     @EnvironmentObject private var loginViewModel: LoginViewModel
     @Environment(\.editMode) private var editMode
     @State private var isPresented = false
+    let pc = PasteboardControler()
     
     private var TrailingMenu: some View {
         return HStack {
@@ -28,7 +29,7 @@ struct TaskView: View {
             if (editMode?.wrappedValue == .inactive) {
                 Menu {
                     Button("Import from Pasteboard", action: {
-                        
+                        taskViewModel.taskItems += pc.importTasksfromPasteboard()
                     })
                     Button("Save to iCloud", action: {
                         
