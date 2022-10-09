@@ -27,7 +27,7 @@ struct TaskView: View {
             EditButton()
             if (editMode?.wrappedValue == .inactive) {
                 Menu {
-                    Button("Import from Clipboard", action: {
+                    Button("Import from Pasteboard", action: {
                         
                     })
                     Button("Save to iCloud", action: {

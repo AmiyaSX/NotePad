@@ -24,16 +24,16 @@ struct NoteView: View {
         return HStack {
             if (editMode?.wrappedValue == .active) {
                 Button(action: noteViewModel.deleteSelectNotes, label: {
-                    Image(systemName: "trash")
+                    Image(systemName: "trash").fixedSize()
                 })
                 Button(action: noteViewModel.pinNotes, label: {
-                    Image(systemName: "pin")
+                    Image(systemName: "pin").fixedSize()
                 })
             }
             EditButton()
             if (editMode?.wrappedValue == .inactive) {
                 Menu {
-                    Button("Import from Clipboard", action: {
+                    Button("Import from Pasteboard", action: {
                         
                     })
                     Button("Save to iCloud", action: {
@@ -73,8 +73,8 @@ struct NoteView: View {
                     .deleteDisabled(true)
                     .listRowSeparator(.hidden)
                 }.listStyle(.plain)
-                    .navigationBarItems(leading: UserView().frame(maxWidth: .infinity, alignment: .leading), trailing: TrailingMenu).environment(\.editMode, editMode)
-                NavigationLink(destination: NoteCreateView(note: $noteViewModel.newNote, title: noteViewModel.newNote.title, content: noteViewModel.newNote.content), label: {
+                .navigationBarItems(leading: UserView().frame(maxWidth: .infinity, alignment: .leading), trailing: TrailingMenu).environment(\.editMode, editMode)
+                NavigationLink(destination: NoteCreateView(note: $noteViewModel.newNote, title: noteViewModel.newNote.title), label: {
                      Image(systemName: "plus")
                          .imageScale(.large)
                          .foregroundColor(.white)
