@@ -21,17 +21,23 @@ pod install
 
 ## Images
 1.NoteView
-![](images/Note.png)
+![](images/Note.png =248x533)
+
 添加Note:
-![](images/AddNote.png)
+![](images/AddNote.png =248x533)
+
 多选置顶、删除：
-![](images/Multi-Select.png)
+![](images/Multi-Select.png =248x533)
+
 2.TaskView
-![](images/Task.png)
+![](images/Task.png =248x533)
+
 添加Task:
-![](images/AddTask.png)
+![](images/AddTask.png =248x533)
+
 3.搜索功能
-![](images/Search.png)
+![](images/Search.png =248x533)
+
 4.其他
-![](images/Menu.png)
+![](images/Menu.png =248x533)
 
