@@ -13,7 +13,7 @@ class PasteboardControler {
     
     let pasteboard = UIPasteboard.general
     /* format eg(begin with '#' end with ':wq\n'):
-          # 🏝
+         # 🏝
          Content
          :wq
          # 🎠
