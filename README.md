@@ -1,18 +1,18 @@
 # NotePad
-Pivot Studio iOS 任务
+Pivot Studio iOS Application
 
-## 完成基础要求
-- 可编辑、添加删除
-- 可多选删除、置顶
-- 便签可移动，⼿动排序
-- 待办事项完成⾃动置后
-- 数据本地持久化
+## Completion of Basic Features
+- Editable, add delete
+- Multi-selectable delete, top
+- Sticky notes can be moved and manually sorted
+- To-do list completion is automatically backed up
+- Local persistence of data
 
-## 完成进阶功能
-- 登录功能，账户管理
-- 搜索框搜索便签内关键词
-- 通过剪切板批量导入便签
-- 内容的显示支持markdown格式(图片显示同理)
+## Completion of Advanced Features
+- Login function, account management
+- Search box for keywords in sticky notes
+- Batch import sticky notes via clipboard
+- Support markdown format for content display (same for image display)
 
 ## Begin With
 ```shell
@@ -21,23 +21,23 @@ pod install
 
 ## Images
 1.NoteView 
-![](images/Note.png)
+<img src="images/Note.png" width="100" height="100">
 
-添加Note: 
-![](images/AddNote.png)
+Add Note: 
+<img src="images/AddNote.png" width="100" height="100">
 
-多选置顶、删除：
-![](images/Multi-Select.png)
+Multi-select topping and deletion:
+<img src="images/Multi-Select.png" width="100" height="100">
 
 2.TaskView 
-![](images/Task.png)
+<img src="images/Task.png" width="100" height="100">
 
-添加Task: 
+Add Task: 
 ![](images/AddTask.png)
 
-3.搜索功能 
+3.Search
 ![](images/Search.png)
 
-4.其他 
+4.Others
 ![](images/Menu.png)
 
