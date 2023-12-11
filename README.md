@@ -22,27 +22,27 @@ pod install
 ## Images
 1.NoteView   
 
-<img src="images/Note.png" height="50%">
+<img src="images/Note.png" height="20%">
 
 Add Note:   
 
-<img src="images/AddNote.png" height="50%">
+<img src="images/AddNote.png" height="20%">
 
 Multi-select topping and deletion:  
 
-<img src="images/Multi-Select.png" height="50%">
+<img src="images/Multi-Select.png" height="20%">
 
 2.TaskView   
 
-<img src="images/Task.png" height="50%">
+<img src="images/Task.png" height="20%">
 
 Add Task:    
 
-<img src="images/AddTask.png" height="50%">
+<img src="images/AddTask.png" height="20%">
 
 3.Search  
 
-<img src="images/Search.png" height="50%">
+<img src="images/Search.png" height="20%">
 
 4.Others  
 
